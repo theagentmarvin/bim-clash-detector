@@ -339,6 +339,17 @@ function setupDragDrop(): void {
 
 async function init(): Promise<void> {
   console.log('[clash-curator] Initializing…');
+  
+  // Suppress web-ifc BRep triangulation errors (harmless, just noisy)
+  const originalError = console.error;
+  console.error = (...args) => {
+    const msg = args[0]?.toString() || '';
+    if (msg.includes('[WEB-IFC][error][TriangulateBounds()]')) {
+      return; // Suppress BRep errors
+    }
+    originalError.apply(console, args);
+  };
+  
   initViewer();
   await initIfc();
   setupDragDrop();

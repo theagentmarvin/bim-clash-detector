@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Clash Rule Editor - BIM Curator</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary": "#7b2600",
+                        "secondary-container": "#b6c8fe",
+                        "on-error-container": "#93000a",
+                        "on-secondary-container": "#415382",
+                        "tertiary-fixed": "#ffdbcf",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed-dim": "#b4c5fb",
+                        "on-primary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "primary-fixed": "#dae2ff",
+                        "inverse-on-surface": "#f0f1f2",
+                        "surface-container-highest": "#e1e3e4",
+                        "outline": "#737685",
+                        "tertiary-container": "#a33500",
+                        "on-tertiary-container": "#ffc6b2",
+                        "surface-container-high": "#e7e8e9",
+                        "surface": "#f8f9fa",
+                        "on-surface": "#191c1d",
+                        "tertiary-fixed-dim": "#ffb59b",
+                        "on-tertiary-fixed-variant": "#812800",
+                        "on-primary-fixed-variant": "#0040a2",
+                        "on-tertiary-fixed": "#380d00",
+                        "on-surface-variant": "#434654",
+                        "background": "#f8f9fa",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-dim": "#d9dadb",
+                        "surface-container-low": "#f3f4f5",
+                        "surface-variant": "#e1e3e4",
+                        "primary": "#003d9b",
+                        "outline-variant": "#c3c6d6",
+                        "on-secondary-fixed-variant": "#344573",
+                        "on-primary-fixed": "#001848",
+                        "error": "#ba1a1a",
+                        "surface-container": "#edeeef",
+                        "on-background": "#191c1d",
+                        "inverse-surface": "#2e3132",
+                        "on-secondary-fixed": "#021945",
+                        "secondary-fixed": "#dae2ff",
+                        "secondary": "#4c5d8d",
+                        "error-container": "#ffdad6",
+                        "on-secondary": "#ffffff",
+                        "inverse-primary": "#b2c5ff",
+                        "primary-fixed-dim": "#b2c5ff",
+                        "surface-tint": "#0c56d0",
+                        "surface-bright": "#f8f9fa",
+                        "primary-container": "#0052cc",
+                        "on-primary-container": "#c4d2ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .blueprint-grid {
+            background-image: radial-gradient(circle, #c3c6d6 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface overflow-hidden h-screen flex">
+<!-- Navigation Drawer (SideNav) -->
+<aside class="hidden md:flex flex-col h-full w-72 fixed left-0 top-0 bg-slate-50 dark:bg-slate-950 z-10 transition-all duration-200 ease-in-out">
+<div class="p-6">
+<h1 class="text-xl font-black text-blue-800 dark:text-blue-300 tracking-tight uppercase">BIM Curator</h1>
+</div>
+<nav class="flex flex-col h-full gap-2 p-4">
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-['Inter'] text-sm tracking-wide uppercase">Project Overview</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-blue-700 dark:text-blue-400 font-bold border-r-4 border-blue-700 bg-slate-100 dark:bg-slate-900" href="#">
+<span class="material-symbols-outlined">rule</span>
+<span class="font-['Inter'] text-sm tracking-wide uppercase">Clash Rules</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="font-['Inter'] text-sm tracking-wide uppercase">Audit Trails</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors mt-auto" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-['Inter'] text-sm tracking-wide uppercase">Settings</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content Canvas (Blurred Background) -->
+<main class="flex-1 ml-0 md:ml-72 flex flex-col relative blueprint-grid">
+<!-- Dashboard Content Preview (under the modal) -->
+<div class="p-8 space-y-8 opacity-40 grayscale blur-sm pointer-events-none">
+<header class="flex justify-between items-end">
+<div>
+<h2 class="text-3xl font-extrabold tracking-tight text-on-surface">Rules Engine</h2>
+<p class="text-on-surface-variant">Manage automated clash detection parameters</p>
+</div>
+<div class="h-12 w-48 bg-primary rounded-lg"></div>
+</header>
+<div class="grid grid-cols-3 gap-6">
+<div class="h-64 bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant/20"></div>
+<div class="h-64 bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant/20"></div>
+<div class="h-64 bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant/20"></div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl h-96 shadow-sm border border-outline-variant/20 flex flex-col">
+<div class="p-6 border-b border-outline-variant/10">
+<div class="h-6 w-32 bg-surface-variant rounded"></div>
+</div>
+<div class="p-6 space-y-4">
+<div class="h-12 bg-surface-container rounded"></div>
+<div class="h-12 bg-surface-container rounded"></div>
+<div class="h-12 bg-surface-container rounded"></div>
+</div>
+</div>
+</div>
+<!-- Backdrop Overlay -->
+<div class="fixed inset-0 bg-on-surface/20 backdrop-blur-sm z-40 flex items-center justify-center p-4">
+<!-- Modal Container -->
+<div class="bg-surface-container-lowest w-full max-w-2xl rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[795px]">
+<!-- Modal Header -->
+<header class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md flex justify-between items-center px-6 py-4 w-full sticky top-0 z-10">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-blue-700 dark:text-blue-400">rule</span>
+<h2 class="text-lg font-bold text-slate-900 dark:text-slate-50 font-['Inter'] tracking-tight">Clash Rule Editor</h2>
+</div>
+<button class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group active:scale-95 duration-150">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-on-surface">close</span>
+</button>
+</header>
+<!-- Modal Body (Scrollable) -->
+<div class="flex-1 overflow-y-auto p-8 space-y-8">
+<!-- Rule Name Input -->
+<section class="space-y-2">
+<label class="block text-sm font-semibold tracking-wide uppercase text-on-surface-variant px-1">Rule Name</label>
+<input class="w-full bg-transparent border-0 border-b-2 border-outline-variant focus:ring-0 focus:border-primary transition-all text-lg py-2 font-medium" placeholder="e.g. Structural vs MEP Interference" type="text" value="MEP-Structural Hard Clash"/>
+</section>
+<!-- Clash Type & Tolerance -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<section class="space-y-4">
+<label class="block text-sm font-semibold tracking-wide uppercase text-on-surface-variant px-1">Clash Type</label>
+<div class="flex bg-surface-container p-1 rounded-lg gap-1">
+<button class="flex-1 py-2 text-xs font-bold uppercase tracking-widest rounded-md bg-white text-primary shadow-sm">HARD</button>
+<button class="flex-1 py-2 text-xs font-bold uppercase tracking-widest rounded-md text-on-surface-variant hover:bg-surface-container-high transition-colors">SOFT</button>
+<button class="flex-1 py-2 text-xs font-bold uppercase tracking-widest rounded-md text-on-surface-variant hover:bg-surface-container-high transition-colors">CLEARANCE</button>
+</div>
+</section>
+<section class="space-y-2">
+<label class="block text-sm font-semibold tracking-wide uppercase text-on-surface-variant px-1">Tolerance</label>
+<div class="relative group">
+<input class="w-full bg-transparent border-0 border-b-2 border-outline-variant focus:ring-0 focus:border-primary transition-all text-lg py-2 font-medium" type="number" value="10"/>
+<span class="absolute right-2 bottom-3 text-on-surface-variant font-bold text-sm tracking-tighter">mm</span>
+</div>
+</section>
+</div>
+<!-- Group A Selection -->
+<section class="space-y-4">
+<div class="flex items-center justify-between">
+<label class="block text-sm font-semibold tracking-wide uppercase text-on-surface-variant px-1">Group A Selection</label>
+<button class="text-xs font-bold text-primary hover:underline">Add Type</button>
+</div>
+<div class="flex flex-wrap gap-2">
+<div class="flex items-center gap-2 bg-secondary-container text-on-secondary-container px-3 py-1.5 rounded-full text-sm font-medium border border-outline-variant/10">
+<span>IfcWall</span>
+<span class="material-symbols-outlined text-base cursor-pointer">cancel</span>
+</div>
+<div class="flex items-center gap-2 bg-secondary-container text-on-secondary-container px-3 py-1.5 rounded-full text-sm font-medium border border-outline-variant/10">
+<span>IfcSlab</span>
+<span class="material-symbols-outlined text-base cursor-pointer">cancel</span>
+</div>
+<div class="flex items-center gap-2 bg-secondary-container text-on-secondary-container px-3 py-1.5 rounded-full text-sm font-medium border border-outline-variant/10">
+<span>IfcColumn</span>
+<span class="material-symbols-outlined text-base cursor-pointer">cancel</span>
+</div>
+<button class="flex items-center justify-center w-8 h-8 rounded-full border-2 border-dashed border-outline-variant text-outline-variant hover:border-primary hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg">add</span>
+</button>
+</div>
+</section>
+<!-- Group B Selection -->
+<section class="space-y-4">
+<div class="flex items-center justify-between">
+<label class="block text-sm font-semibold tracking-wide uppercase text-on-surface-variant px-1">Group B Selection</label>
+<button class="text-xs font-bold text-primary hover:underline">Add Type</button>
+</div>
+<div class="flex flex-wrap gap-2">
+<div class="flex items-center gap-2 bg-tertiary-container text-on-tertiary-container px-3 py-1.5 rounded-full text-sm font-medium border border-outline-variant/10">
+<span>IfcPipe</span>
+<span class="material-symbols-outlined text-base cursor-pointer">cancel</span>
+</div>
+<div class="flex items-center gap-2 bg-tertiary-container text-on-tertiary-container px-3 py-1.5 rounded-full text-sm font-medium border border-outline-variant/10">
+<span>IfcDuct</span>
+<span class="material-symbols-outlined text-base cursor-pointer">cancel</span>
+</div>
+<div class="flex items-center gap-2 bg-tertiary-container text-on-tertiary-container px-3 py-1.5 rounded-full text-sm font-medium border border-outline-variant/10">
+<span>IfcCableTray</span>
+<span class="material-symbols-outlined text-base cursor-pointer">cancel</span>
+</div>
+<button class="flex items-center justify-center w-8 h-8 rounded-full border-2 border-dashed border-outline-variant text-outline-variant hover:border-primary hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg">add</span>
+</button>
+</div>
+</section>
+<!-- Summary / Logic Display -->
+<div class="p-6 bg-surface-container rounded-xl border-l-4 border-primary">
+<h4 class="text-xs font-black uppercase text-on-surface-variant tracking-widest mb-2">Rule Logic Summary</h4>
+<p class="text-sm leading-relaxed font-medium">Detect any <span class="text-primary font-bold">Hard Collision</span> where elements from <span class="text-secondary font-bold">Group A</span> intersect elements from <span class="text-tertiary font-bold">Group B</span> within a <span class="bg-surface-container-highest px-1.5 py-0.5 rounded">10mm</span> tolerance threshold.</p>
+</div>
+</div>
+<!-- Modal Footer -->
+<footer class="p-6 bg-surface-container-low flex justify-end items-center gap-4">
+<button class="px-6 py-2.5 rounded-lg text-primary font-bold text-sm tracking-wide hover:bg-primary/5 active:scale-95 transition-all">
+                        Cancel
+                    </button>
+<button class="bg-gradient-to-br from-primary to-primary-container px-8 py-2.5 rounded-lg text-white font-bold text-sm tracking-wide shadow-lg shadow-primary/20 flex items-center gap-2 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">save</span>
+                        Save Rule
+                    </button>
+</footer>
+</div>
+</div>
+</main>
+<!-- Visual Polish: Floating Tooltip Preview -->
+<div class="fixed bottom-8 right-8 z-50">
+<div class="bg-surface-container-highest p-4 rounded-xl shadow-2xl flex items-center gap-4 border border-outline-variant/30">
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white">
+<span class="material-symbols-outlined">analytics</span>
+</div>
+<div class="text-xs uppercase font-bold tracking-widest space-y-0.5">
+<div class="text-on-surface-variant">Live Validation</div>
+<div class="text-primary">Ready to run</div>
+</div>
+</div>
+</div>
+</body></html>

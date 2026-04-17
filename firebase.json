@@ -1,0 +1,12 @@
+{
+  "hosting": {
+    "public": "dist",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "headers": [
+      { "source": "**/*.html", "headers": [{ "key": "Cache-Control", "value": "max-age=0, s-maxage=0" }] },
+      { "source": "**/*.@(js|css|wasm|mjs)", "headers": [{ "key": "Cache-Control", "value": "max-age=31536000, immutable" }] },
+      { "source": "**/*.wasm", "headers": [{ "key": "Content-Type", "value": "application/wasm" }] }
+    ],
+    "rewrites": [{ "source": "**", "destination": "/index.html" }]
+  }
+}

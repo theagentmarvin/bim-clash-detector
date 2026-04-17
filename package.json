@@ -1,0 +1,22 @@
+{
+  "name": "bim-clash-detector",
+  "type": "module",
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "deploy": "npm run build && firebase deploy --only hosting"
+  },
+  "dependencies": {
+    "web-ifc": "^0.0.74",
+    "three": "^0.175.0"
+  },
+  "devDependencies": {
+    "@types/three": "^0.182.0",
+    "typescript": "^5.7.3",
+    "vite": "^6.0.11",
+    "vite-plugin-wasm": "^3.6.0",
+    "vite-plugin-top-level-await": "^1.6.0"
+  }
+}

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Clash Viewer | BIM Precision</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "error-container": "#ffdad6",
+                    "secondary": "#4c5d8d",
+                    "primary-fixed-dim": "#b2c5ff",
+                    "tertiary": "#7b2600",
+                    "inverse-on-surface": "#f0f1f2",
+                    "tertiary-container": "#a33500",
+                    "on-tertiary-fixed-variant": "#812800",
+                    "primary": "#003d9b",
+                    "on-secondary-fixed-variant": "#344573",
+                    "on-primary-fixed": "#001848",
+                    "secondary-fixed": "#dae2ff",
+                    "on-secondary-container": "#415382",
+                    "surface-bright": "#f8f9fa",
+                    "tertiary-fixed-dim": "#ffb59b",
+                    "surface-container-low": "#f3f4f5",
+                    "on-background": "#191c1d",
+                    "on-secondary": "#ffffff",
+                    "background": "#f8f9fa",
+                    "surface": "#f8f9fa",
+                    "on-primary-fixed-variant": "#0040a2",
+                    "surface-tint": "#0c56d0",
+                    "outline": "#737685",
+                    "surface-container-high": "#e7e8e9",
+                    "outline-variant": "#c3c6d6",
+                    "surface-dim": "#d9dadb",
+                    "primary-container": "#0052cc",
+                    "primary-fixed": "#dae2ff",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed": "#ffdbcf",
+                    "inverse-primary": "#b2c5ff",
+                    "on-surface-variant": "#434654",
+                    "on-error-container": "#93000a",
+                    "on-error": "#ffffff",
+                    "on-surface": "#191c1d",
+                    "surface-container-highest": "#e1e3e4",
+                    "on-primary-container": "#c4d2ff",
+                    "error": "#ba1a1a",
+                    "surface-container": "#edeeef",
+                    "on-tertiary-container": "#ffc6b2",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-surface": "#2e3132",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary-fixed": "#021945",
+                    "on-tertiary-fixed": "#380d00",
+                    "secondary-container": "#b6c8fe",
+                    "surface-variant": "#e1e3e4",
+                    "secondary-fixed-dim": "#b4c5fb"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Inter"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .canvas-grid {
+            background-image: 
+                linear-gradient(to right, rgba(195, 198, 214, 0.2) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(195, 198, 214, 0.2) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface overflow-hidden">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-sm dark:shadow-none">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-blue-700 dark:text-blue-400" data-icon="architecture">architecture</span>
+<h1 class="text-xl font-bold tracking-tighter text-slate-900 dark:text-slate-50 font-inter tracking-tight font-semibold">Clash Viewer</h1>
+<nav class="hidden md:flex ml-8 gap-6">
+<button class="text-blue-700 dark:text-blue-400 font-bold hover:bg-slate-100/50 dark:hover:bg-slate-800/50 transition-colors px-3 py-1 rounded-lg">Viewer</button>
+<button class="text-slate-500 dark:text-slate-400 hover:bg-slate-100/50 dark:hover:bg-slate-800/50 transition-colors px-3 py-1 rounded-lg">Issues</button>
+<button class="text-slate-500 dark:text-slate-400 hover:bg-slate-100/50 dark:hover:bg-slate-800/50 transition-colors px-3 py-1 rounded-lg">Reports</button>
+</nav>
+</div>
+<div class="flex items-center gap-2">
+<div class="flex gap-1 mr-4 bg-surface-container-low p-1 rounded-lg">
+<button class="p-2 hover:bg-white rounded-md transition-all text-on-surface-variant" title="Visibility">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+<button class="p-2 hover:bg-white rounded-md transition-all text-on-surface-variant" title="Section Box">
+<span class="material-symbols-outlined" data-icon="view_in_ar">view_in_ar</span>
+</button>
+<button class="p-2 hover:bg-white rounded-md transition-all text-on-surface-variant" title="Explode View">
+<span class="material-symbols-outlined" data-icon="layers">layers</span>
+</button>
+<button class="p-2 hover:bg-white rounded-md transition-all text-on-surface-variant" title="Capture Screenshot">
+<span class="material-symbols-outlined" data-icon="photo_camera">photo_camera</span>
+</button>
+</div>
+<button class="px-4 py-2 bg-primary text-on-primary rounded-lg font-medium text-sm transition-all active:scale-95">Export</button>
+</div>
+</header>
+<!-- Main 3D Canvas Area -->
+<main class="relative w-full h-screen bg-surface-container-lowest canvas-grid pt-16">
+<!-- 3D Model Representation (Conceptual) -->
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+<div class="relative w-3/4 h-3/4 max-w-5xl">
+<!-- Main Structure -->
+<div class="absolute inset-0 bg-slate-200/40 rounded-xl skew-x-12 -skew-y-6 flex items-center justify-center border border-outline-variant/30 overflow-hidden">
+<img alt="Architectural structure" class="w-full h-full object-cover opacity-50 mix-blend-multiply" data-alt="high-fidelity 3D architectural model of a modern building interior with visible structural beams and HVAC ducts in neutral grey" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDD5j4ImyiESg2mie02tmkz_GYQaQpqD2Rf-2f-bu3QrvzcWLx_2HbKli-7WpNnoC0OuU1rb_9U2Jtl9sPuxeeuGVoWX3j2CGdNFRLb1ZVvUeqSif94slJUYQv8NXo2BDaayJk5i3NvIVkoSbfZUlcQBGtFXA5mzQ7Dy3NMT68vyvMYXtvPJEtUx4lXWRNyVjGC_iT-gaHGXEGPJHt-RI9VcwxlReeNpCqihM0oTPoG-64ZlxhNsqLajaWiU7w-PL8MCJv7vDpOx4w"/>
+<!-- Hard Clash Overlay (Red) -->
+<div class="absolute top-1/3 left-1/2 w-32 h-32 bg-error/40 border-4 border-error rounded-full blur-xl animate-pulse"></div>
+<div class="absolute top-1/3 left-1/2 w-24 h-24 flex items-center justify-center">
+<div class="bg-error-container text-on-error-container px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest shadow-lg border border-error/20">
+                            Hard Clash
+                        </div>
+</div>
+<!-- Soft Clash Overlay (Yellow/Tertiary) -->
+<div class="absolute bottom-1/4 left-1/3 w-40 h-24 bg-tertiary-container/30 border-2 border-tertiary-container/60 rounded-xl blur-md"></div>
+<div class="absolute bottom-1/4 left-1/3 flex items-center justify-center translate-x-10">
+<div class="bg-tertiary-fixed text-on-tertiary-fixed px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest shadow-md border border-tertiary/20">
+                            Clearance Issue
+                        </div>
+</div>
+<!-- Engineering Elements (Wireframes) -->
+<div class="absolute inset-0 border-2 border-primary/10 pointer-events-none grid grid-cols-12 grid-rows-12">
+<div class="col-span-full border-b border-primary/5"></div>
+<div class="row-span-full border-r border-primary/5"></div>
+</div>
+</div>
+<!-- XYZ Axis Indicator (Bottom Left of Viewport) -->
+<div class="absolute bottom-8 left-8 flex items-end gap-1">
+<div class="w-1 h-12 bg-red-500 rounded-full relative"><span class="absolute -top-6 left-0 text-[10px] font-bold text-red-500">Y</span></div>
+<div class="w-12 h-1 bg-green-500 rounded-full relative"><span class="absolute top-0 -right-6 text-[10px] font-bold text-green-500">X</span></div>
+<div class="w-1 h-1 bg-blue-500 rounded-full transform -rotate-45 relative origin-bottom"><span class="absolute -top-6 -left-2 text-[10px] font-bold text-blue-500">Z</span></div>
+</div>
+</div>
+</div>
+<!-- Sidebar Panel: Clash Details (Bento/Card Style) -->
+<aside class="absolute top-24 left-8 w-80 flex flex-col gap-4 pointer-events-auto">
+<!-- Active Clash Card -->
+<div class="bg-white/90 backdrop-blur-md rounded-xl p-5 shadow-2xl shadow-slate-900/5 border border-slate-200/20">
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-on-surface font-bold tracking-tight">Active Issue</h2>
+<span class="bg-error text-white text-[10px] px-2 py-0.5 rounded-full font-bold">ID: 402</span>
+</div>
+<div class="space-y-3">
+<div class="p-3 bg-surface-container-low rounded-lg">
+<p class="text-xs text-on-surface-variant font-medium mb-1">Item A</p>
+<p class="text-sm font-semibold text-on-surface">Structural Beam (ST-04)</p>
+</div>
+<div class="p-3 bg-surface-container-low rounded-lg border-l-4 border-error">
+<p class="text-xs text-on-surface-variant font-medium mb-1">Item B</p>
+<p class="text-sm font-semibold text-on-surface">HVAC Main Duct (M-102)</p>
+</div>
+<div class="pt-2 flex gap-2">
+<button class="flex-1 py-2 bg-primary-container text-on-primary-container text-xs font-bold rounded-lg hover:bg-primary transition-colors">ASSIGN ISSUE</button>
+<button class="px-3 py-2 bg-surface-container-highest text-on-surface text-xs font-bold rounded-lg"><span class="material-symbols-outlined text-sm" data-icon="flag">flag</span></button>
+</div>
+</div>
+</div>
+<!-- Stats Grid -->
+<div class="grid grid-cols-2 gap-3">
+<div class="bg-white/80 backdrop-blur-md p-4 rounded-xl shadow-sm border border-slate-200/10">
+<p class="text-[10px] uppercase tracking-widest text-on-surface-variant mb-1 font-bold">Hard Clashes</p>
+<p class="text-2xl font-extrabold text-error">24</p>
+</div>
+<div class="bg-white/80 backdrop-blur-md p-4 rounded-xl shadow-sm border border-slate-200/10">
+<p class="text-[10px] uppercase tracking-widest text-on-surface-variant mb-1 font-bold">Clearance</p>
+<p class="text-2xl font-extrabold text-tertiary">118</p>
+</div>
+</div>
+</aside>
+<!-- Floating Controls (Bottom Right) -->
+<div class="absolute bottom-32 right-8 flex flex-col gap-3">
+<button class="w-14 h-14 bg-white shadow-xl rounded-full flex items-center justify-center text-primary hover:scale-110 transition-transform active:scale-95 border border-slate-100">
+<span class="material-symbols-outlined" data-icon="sync" style="font-variation-settings: 'wght' 600;">sync</span>
+</button>
+<button class="w-14 h-14 bg-primary text-white shadow-xl rounded-full flex items-center justify-center hover:scale-110 transition-transform active:scale-95">
+<span class="material-symbols-outlined" data-icon="3d_rotation" style="font-variation-settings: 'wght' 600;">3d_rotation</span>
+</button>
+<button class="w-14 h-14 bg-white shadow-xl rounded-full flex items-center justify-center text-slate-600 hover:scale-110 transition-transform active:scale-95 border border-slate-100">
+<span class="material-symbols-outlined" data-icon="home" style="font-variation-settings: 'wght' 600;">home</span>
+</button>
+</div>
+</main>
+<!-- BottomNavBar -->
+<div class="fixed bottom-0 left-0 w-full z-50 flex justify-center pb-8">
+<div class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-full mx-auto w-fit px-2 shadow-2xl shadow-slate-900/5 ghost-border border border-slate-200/20 dark:border-slate-700/20 flex items-center">
+<button class="bg-blue-600 dark:bg-blue-500 text-white rounded-full p-3 transition-all duration-300 ease-out hover:scale-110">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+<button class="text-slate-600 dark:text-slate-300 p-3 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 ease-out hover:scale-110">
+<span class="material-symbols-outlined" data-icon="view_in_ar">view_in_ar</span>
+</button>
+<button class="text-slate-600 dark:text-slate-300 p-3 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 ease-out hover:scale-110">
+<span class="material-symbols-outlined" data-icon="layers">layers</span>
+</button>
+<button class="text-slate-600 dark:text-slate-300 p-3 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 ease-out hover:scale-110">
+<span class="material-symbols-outlined" data-icon="wallpaper">wallpaper</span>
+</button>
+<button class="text-slate-600 dark:text-slate-300 p-3 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 ease-out hover:scale-110">
+<span class="material-symbols-outlined" data-icon="photo_camera">photo_camera</span>
+</button>
+</div>
+</div>
+</body></html>

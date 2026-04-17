@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Clash Detection - Results</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary": "#003d9b",
+                    "surface": "#f8f9fa",
+                    "secondary": "#4c5d8d",
+                    "on-error-container": "#93000a",
+                    "surface-container-highest": "#e1e3e4",
+                    "on-secondary-fixed": "#021945",
+                    "on-secondary": "#ffffff",
+                    "on-primary-container": "#c4d2ff",
+                    "on-background": "#191c1d",
+                    "tertiary": "#7b2600",
+                    "error": "#ba1a1a",
+                    "surface-tint": "#0c56d0",
+                    "on-secondary-container": "#415382",
+                    "on-tertiary-fixed": "#380d00",
+                    "primary-container": "#0052cc",
+                    "tertiary-fixed-dim": "#ffb59b",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-container": "#ffc6b2",
+                    "surface-dim": "#d9dadb",
+                    "outline": "#737685",
+                    "inverse-primary": "#b2c5ff",
+                    "secondary-container": "#b6c8fe",
+                    "surface-bright": "#f8f9fa",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary-fixed-variant": "#344573",
+                    "on-primary-fixed": "#001848",
+                    "on-error": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "on-primary": "#ffffff",
+                    "tertiary-container": "#a33500",
+                    "on-surface-variant": "#434654",
+                    "background": "#f8f9fa",
+                    "surface-container-high": "#e7e8e9",
+                    "secondary-fixed-dim": "#b4c5fb",
+                    "surface-container-low": "#f3f4f5",
+                    "on-tertiary-fixed-variant": "#812800",
+                    "surface-container": "#edeeef",
+                    "primary-fixed": "#dae2ff",
+                    "inverse-on-surface": "#f0f1f2",
+                    "surface-variant": "#e1e3e4",
+                    "on-primary-fixed-variant": "#0040a2",
+                    "secondary-fixed": "#dae2ff",
+                    "on-surface": "#191c1d",
+                    "tertiary-fixed": "#ffdbcf",
+                    "inverse-surface": "#2e3132",
+                    "primary-fixed-dim": "#b2c5ff",
+                    "outline-variant": "#c3c6d6"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Inter"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface antialiased overflow-hidden">
+<!-- Background: Model Loader Screen (Mockup) -->
+<div class="fixed inset-0 z-0">
+<div class="absolute inset-0 bg-black/40 z-10 backdrop-blur-sm"></div>
+<img class="w-full h-full object-cover" data-alt="3D BIM architectural model showing complex steel structures and ventilation ducts in a semi-transparent wireframe view" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTFKc9C_VeJgy6WOYy4pSfMA3qYfX_33uqGEWGa5FyNZbGn_Vdb9qyaUzuc-szG2eZlOk_Y_B4wojXEvTJZobki5crdzJaFC3Plv6wYvrXLlJdg9NvMOGtOHj_LICM1RBBK6G-ldcdPW5-vR6Xfi_g2u7SFQMgvwxZb6LrRot27CuNBB6qDXC9b5Ft5ZhxsrHU8Z0OwYk-U1EA693oelsP6fhH2TDxGcDgMmb9SPX72hFHNMG1vhrunOTGjnQ999aZwKOPEEjTQRk"/>
+<!-- Top App Bar (Shared Component Reference) -->
+<header class="fixed top-0 w-full z-20 flex justify-between items-center px-6 h-16 w-full bg-[#f3f4f5] dark:bg-[#1a1c1e]">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#434654] dark:text-[#c3c6d6] cursor-pointer">menu</span>
+<h1 class="text-xl font-bold text-[#191c1d] dark:text-[#e1e2e1] font-['Inter'] tracking-tight">Clash Detection</h1>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#434654] dark:text-[#c3c6d6] cursor-pointer">more_vert</span>
+</div>
+</header>
+<!-- Floating Action Button Contextual Logic: Suppressed because focused on bottom sheet -->
+</div>
+<!-- Bottom Sheet Container -->
+<div class="fixed inset-x-0 bottom-0 z-50 flex justify-center">
+<!-- The Sheet -->
+<div class="w-full max-w-4xl h-[574px] bg-white dark:bg-[#191c1d] rounded-t-[2.5rem] shadow-[0_-12px_32px_rgba(25,28,29,0.1)] flex flex-col overflow-hidden border-x border-t border-outline-variant/10">
+<!-- Handle & Header Section -->
+<div class="px-8 pt-4 pb-6 flex-shrink-0">
+<div class="flex justify-center mb-6">
+<div class="w-12 h-1.5 bg-surface-container-highest dark:bg-white/10 rounded-full"></div>
+</div>
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+<div>
+<h2 class="text-3xl font-extrabold tracking-tight text-on-surface">128 Clashes Found</h2>
+<p class="text-on-surface-variant text-sm mt-1">Project: Terminal Expansion Phase 2</p>
+</div>
+<!-- Filter Chips -->
+<div class="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 no-scrollbar">
+<button class="px-5 py-2 bg-primary-container text-white rounded-full text-sm font-bold shadow-sm">All</button>
+<button class="px-5 py-2 bg-surface-container text-on-surface-variant rounded-full text-sm font-semibold hover:bg-surface-container-high transition-colors">Hard</button>
+<button class="px-5 py-2 bg-surface-container text-on-surface-variant rounded-full text-sm font-semibold hover:bg-surface-container-high transition-colors">Soft</button>
+<button class="px-5 py-2 bg-surface-container text-on-surface-variant rounded-full text-sm font-semibold hover:bg-surface-container-high transition-colors">Clearance</button>
+<button class="p-2 bg-surface-container text-on-surface-variant rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+</button>
+</div>
+</div>
+</div>
+<!-- List Section -->
+<div class="flex-1 overflow-y-auto px-8 pb-32 space-y-4">
+<!-- Card 1: Hard Clash -->
+<div class="group bg-surface-container-low dark:bg-white/5 rounded-2xl p-5 flex items-start gap-5 hover:bg-white hover:shadow-xl hover:shadow-primary/5 transition-all duration-300">
+<div class="w-12 h-12 rounded-xl bg-tertiary-container flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-on-tertiary-container" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center justify-between">
+<span class="font-label text-[11px] font-bold tracking-widest text-on-surface-variant uppercase">ID: CL-042</span>
+<span class="px-3 py-1 rounded-full bg-error-container text-on-error-container text-[10px] font-extrabold uppercase tracking-tight">Open</span>
+</div>
+<h3 class="text-lg font-bold text-on-surface mt-1">Duct vs Steel Column</h3>
+<p class="text-sm text-on-surface-variant mt-1 leading-relaxed">Mechanical ductwork intersecting with structural grid A-14 column flange.</p>
+<div class="flex items-center gap-4 mt-4">
+<div class="flex items-center gap-1.5 text-xs font-medium text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">schedule</span>
+                                2h ago
+                            </div>
+<div class="flex items-center gap-1.5 text-xs font-medium text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">person</span>
+                                M. Thompson
+                            </div>
+</div>
+</div>
+<button class="self-center p-2 rounded-full bg-white dark:bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-primary">chevron_right</span>
+</button>
+</div>
+<!-- Card 2: Soft Clash -->
+<div class="group bg-surface-container-low dark:bg-white/5 rounded-2xl p-5 flex items-start gap-5 hover:bg-white hover:shadow-xl hover:shadow-primary/5 transition-all duration-300">
+<div class="w-12 h-12 rounded-xl bg-secondary-container flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-on-secondary-container" style="font-variation-settings: 'FILL' 1;">error</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center justify-between">
+<span class="font-label text-[11px] font-bold tracking-widest text-on-surface-variant uppercase">ID: CL-089</span>
+<span class="px-3 py-1 rounded-full bg-surface-container-high text-on-surface-variant text-[10px] font-extrabold uppercase tracking-tight">In Review</span>
+</div>
+<h3 class="text-lg font-bold text-on-surface mt-1">Cable Tray vs Fire Pipe</h3>
+<p class="text-sm text-on-surface-variant mt-1 leading-relaxed">Proximity warning: 25mm clearance violation between LV tray and wet pipe.</p>
+<div class="flex items-center gap-4 mt-4">
+<div class="flex items-center gap-1.5 text-xs font-medium text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">schedule</span>
+                                5h ago
+                            </div>
+<div class="flex items-center gap-1.5 text-xs font-medium text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">person</span>
+                                J. Chen
+                            </div>
+</div>
+</div>
+<button class="self-center p-2 rounded-full bg-white dark:bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-primary">chevron_right</span>
+</button>
+</div>
+<!-- Card 3: Hard Clash -->
+<div class="group bg-surface-container-low dark:bg-white/5 rounded-2xl p-5 flex items-start gap-5 hover:bg-white hover:shadow-xl hover:shadow-primary/5 transition-all duration-300">
+<div class="w-12 h-12 rounded-xl bg-tertiary-container flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-on-tertiary-container" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center justify-between">
+<span class="font-label text-[11px] font-bold tracking-widest text-on-surface-variant uppercase">ID: CL-105</span>
+<span class="px-3 py-1 rounded-full bg-error-container text-on-error-container text-[10px] font-extrabold uppercase tracking-tight">Open</span>
+</div>
+<h3 class="text-lg font-bold text-on-surface mt-1">Slab vs Gravity Pipe</h3>
+<p class="text-sm text-on-surface-variant mt-1 leading-relaxed">Major penetration detected in L02 transfer slab without sleeve annotation.</p>
+<div class="flex items-center gap-4 mt-4">
+<div class="flex items-center gap-1.5 text-xs font-medium text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">schedule</span>
+                                1d ago
+                            </div>
+<div class="flex items-center gap-1.5 text-xs font-medium text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">person</span>
+                                S. Kim
+                            </div>
+</div>
+</div>
+<button class="self-center p-2 rounded-full bg-white dark:bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-primary">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Nav Bar (Shared Component Reference) -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-safe h-20 bg-white/80 dark:bg-[#191c1d]/80 backdrop-blur-xl z-[60] border-t border-[#c3c6d6]/15 shadow-[0_-12px_32px_rgba(25,28,29,0.06)]">
+<div class="flex flex-col items-center justify-center text-[#434654] dark:text-[#c3c6d6] hover:text-[#0052CC] transition-all cursor-pointer">
+<span class="material-symbols-outlined mb-1">view_in_ar</span>
+<span class="font-['Inter'] text-[11px] uppercase tracking-wider font-bold">Models</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#0052CC] dark:text-[#478eff] bg-[#0052CC]/5 rounded-xl px-3 py-1 transition-all cursor-pointer">
+<span class="material-symbols-outlined mb-1">distance</span>
+<span class="font-['Inter'] text-[11px] uppercase tracking-wider font-bold">Clashes</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#434654] dark:text-[#c3c6d6] hover:text-[#0052CC] transition-all cursor-pointer">
+<span class="material-symbols-outlined mb-1">analytics</span>
+<span class="font-['Inter'] text-[11px] uppercase tracking-wider font-bold">Reports</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#434654] dark:text-[#c3c6d6] hover:text-[#0052CC] transition-all cursor-pointer">
+<span class="material-symbols-outlined mb-1">settings</span>
+<span class="font-['Inter'] text-[11px] uppercase tracking-wider font-bold">Settings</span>
+</div>
+</nav>
+</body></html>

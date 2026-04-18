@@ -6,230 +6,133 @@
   <title>Clash Curator</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { 
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; 
-      background: #0a0e19;
-      color: #e5e7eb;
-      height: 100vh;
-      overflow: hidden;
-    }
-    #app { display: flex; flex-direction: column; height: 100vh; }
-    
-    /* Header */
-    header {
-      background: #111827;
-      border-bottom: 1px solid #1f2937;
-      padding: 12px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-shrink: 0;
-    }
-    header h1 { font-size: 18px; font-weight: 600; color: #fff; }
-    header .tag { 
-      background: #1e3a5f; color: #60a5fa; 
-      font-size: 11px; padding: 4px 8px; border-radius: 4px;
-      font-weight: 500;
-    }
-    
-    /* Main content */
-    main { flex: 1; display: flex; position: relative; overflow: hidden; }
-    
-    /* Sidebar */
-    .sidebar {
-      width: 300px;
-      background: #111827;
-      border-right: 1px solid #1f2937;
-      display: flex;
-      flex-direction: column;
-      flex-shrink: 0;
-      z-index: 10;
-    }
-    .sidebar.collapsed { width: 0; overflow: hidden; }
-    
-    .sidebar-section {
-      padding: 16px;
-      border-bottom: 1px solid #1f2937;
-    }
-    .sidebar-section h3 { 
-      font-size: 11px; text-transform: uppercase; 
-      color: #6b7280; letter-spacing: 0.05em; margin-bottom: 12px;
-    }
-    
-    /* Model cards */
-    .model-card {
-      background: #1f2937;
-      border-radius: 8px;
-      padding: 12px;
-      margin-bottom: 8px;
-    }
-    .model-card.loaded { border: 1px solid #10b981; }
-    .model-card h4 { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
-    .model-card .meta { font-size: 11px; color: #9ca3af; }
-    .model-card .status { 
-      display: inline-block; width: 8px; height: 8px; 
-      border-radius: 50%; margin-right: 6px;
-    }
-    .model-card .status.empty { background: #4b5563; }
-    .model-card .status.ready { background: #10b981; }
-    
-    /* Buttons */
-    .btn {
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      width: 100%; padding: 10px 16px;
-      border: none; border-radius: 8px;
-      font-size: 13px; font-weight: 500;
-      cursor: pointer; transition: all 0.15s;
-    }
-    .btn-primary { background: #3b82f6; color: #fff; }
-    .btn-primary:hover { background: #2563eb; }
-    .btn-secondary { background: #1f2937; color: #e5e7eb; border: 1px solid #374151; }
-    .btn-secondary:hover { background: #374151; }
-    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
-    
-    /* File input */
-    .file-drop {
-      border: 2px dashed #374151;
-      border-radius: 8px;
-      padding: 20px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.15s;
-      margin-bottom: 8px;
-    }
-    .file-drop:hover { border-color: #3b82f6; background: rgba(59,130,246,0.05); }
-    .file-drop.dragover { border-color: #3b82f6; background: rgba(59,130,246,0.1); }
-    .file-drop input { display: none; }
-    .file-drop .icon { font-size: 24px; margin-bottom: 8px; }
-    .file-drop .text { font-size: 12px; color: #9ca3af; }
-    .file-drop .text strong { color: #60a5fa; }
-    
-    /* Model stats */
-    .stats { margin-top: 12px; }
-    .stat-row {
-      display: flex; justify-content: space-between;
-      padding: 6px 0; font-size: 12px;
-      border-bottom: 1px solid #1f2937;
-    }
-    .stat-row:last-child { border-bottom: none; }
-    .stat-label { color: #9ca3af; }
-    .stat-value { font-weight: 500; }
-    
-    /* Levels list */
-    .levels-list { margin-top: 8px; }
-    .level-chip {
-      display: inline-block;
-      background: #1f2937;
-      border: 1px solid #374151;
-      border-radius: 4px;
-      padding: 4px 8px;
-      font-size: 11px;
-      margin: 2px;
-    }
-    
-    /* Viewer */
-    #viewer { flex: 1; position: relative; }
-    #viewer canvas { display: block; width: 100% !important; height: 100% !important; }
-    
-    /* Loading overlay */
-    .loading-overlay {
-      position: absolute; inset: 0;
-      background: rgba(10,14,25,0.9);
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      z-index: 100;
-      opacity: 0; pointer-events: none;
-      transition: opacity 0.2s;
-    }
-    .loading-overlay.visible { opacity: 1; pointer-events: auto; }
-    .spinner {
-      width: 40px; height: 40px;
-      border: 3px solid #1f2937;
-      border-top-color: #3b82f6;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin-bottom: 16px;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .loading-text { font-size: 14px; color: #9ca3af; }
-    
-    /* Toggle sidebar */
-    .toggle-sidebar {
-      position: absolute; top: 12px; left: 12px;
-      background: #111827; border: 1px solid #1f2937;
-      color: #e5e7eb; width: 36px; height: 36px;
-      border-radius: 8px; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      z-index: 20;
-    }
-    .toggle-sidebar:hover { background: #1f2937; }
-    
-    /* Viewer info */
-    .viewer-info {
-      position: absolute; bottom: 12px; left: 12px;
-      background: rgba(17,24,39,0.9);
-      border: 1px solid #1f2937;
-      border-radius: 8px;
-      padding: 8px 12px;
-      font-size: 11px;
-      z-index: 20;
-    }
-    .viewer-info div { margin: 2px 0; }
-    .viewer-info .label { color: #6b7280; }
-    .viewer-info .value { color: #e5e7eb; font-weight: 500; }
-    
-    /* Toggle theme */
-    .toggle-theme {
-      position: absolute; top: 12px; right: 12px;
-      background: #111827; border: 1px solid #1f2937;
-      color: #e5e7eb; width: 36px; height: 36px;
-      border-radius: 8px; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      z-index: 20;
-    }
-    .toggle-theme:hover { background: #1f2937; }
-    
-    /* Empty state */
-    .empty-state {
-      position: absolute; inset: 0;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      z-index: 5;
-    }
-    .empty-state .icon { font-size: 64px; margin-bottom: 16px; opacity: 0.3; }
-    .empty-state h2 { font-size: 18px; font-weight: 500; margin-bottom: 8px; }
-    .empty-state p { font-size: 13px; color: #6b7280; }
-  </style>
+  <link rel="stylesheet" href="/src/styles.css">
 </head>
 <body>
   <div id="app">
     <header>
       <h1>🏗️ Clash Curator</h1>
-      <span class="tag">v0.1 PoC</span>
+      <span class="tag">v0.2 — Navisworks Workflow</span>
     </header>
-    
+
     <main>
       <button class="toggle-sidebar" onclick="toggleSidebar()">☰</button>
-      
+
       <div class="sidebar" id="sidebar">
+
+        <!-- ── CLASH MATRIX (above Clash Rules) ── -->
+        <div class="sidebar-section" id="matrixPanel" style="display:none;">
+          <div class="section-header" onclick="toggleMatrixPanel()">
+            <h3>🔳 Clash Matrix</h3>
+            <span class="toggle-icon" id="matrixToggleIcon">▾</span>
+          </div>
+          <div id="matrixPanelContent">
+            <div id="clashMatrixContainer" class="clash-matrix-scroll">
+              <!-- matrix rendered here -->
+            </div>
+            <div class="matrix-legend">
+              <span class="legend-item"><span class="legend-dot" style="background:#d1fae5"></span>0</span>
+              <span class="legend-item"><span class="legend-dot" style="background:#fef3c7"></span>1-10</span>
+              <span class="legend-item"><span class="legend-dot" style="background:#fed7aa"></span>11-50</span>
+              <span class="legend-item"><span class="legend-dot" style="background:#fecaca"></span>50+</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── CLASH RULES ── -->
+        <div class="sidebar-section" id="clashRulesPanel">
+          <h3>🔍 Clash Rules</h3>
+
+          <div class="clash-rules">
+            <!-- Selection A / B -->
+            <div class="selection-row">
+              <div class="selection-group">
+                <label>Selection A (Structure)</label>
+                <select
+                  id="selectionASelect"
+                  multiple
+                  size="4"
+                  onchange="onSelectionAChange(this)"
+                  title="Hold Ctrl/Cmd to select multiple types"
+                >
+                  <option value="">— Select types —</option>
+                </select>
+              </div>
+              <div class="selection-group">
+                <label>Selection B (MEP)</label>
+                <select
+                  id="selectionBSelect"
+                  multiple
+                  size="4"
+                  onchange="onSelectionBChange(this)"
+                  title="Hold Ctrl/Cmd to select multiple types"
+                >
+                  <option value="">— Select types —</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Element counts -->
+            <div class="selection-row" style="margin-bottom: 10px;">
+              <div class="selection-count" id="selectionACount">A: — elements</div>
+              <div class="selection-count" id="selectionBCount">B: — elements</div>
+            </div>
+
+            <!-- Settings row -->
+            <div class="settings-row">
+              <div class="setting-group">
+                <label>Type</label>
+                <select id="clashTypeSelect" onchange="onClashTypeChange(this)">
+                  <option value="HARD" selected>Hard</option>
+                  <option value="SOFT">Soft</option>
+                  <option value="CLEARANCE">Clearance</option>
+                </select>
+              </div>
+              <div class="setting-group">
+                <label>Tolerance</label>
+                <input
+                  type="number"
+                  id="toleranceInput"
+                  value="10"
+                  min="1"
+                  max="100"
+                  step="1"
+                  oninput="onToleranceChange(this)"
+                >
+                <span class="unit">mm</span>
+              </div>
+            </div>
+
+            <!-- No-rules warning -->
+            <div class="no-rules-warning" id="noRulesWarning">
+              Select types for both Selection A and B
+            </div>
+
+            <!-- Run button -->
+            <button class="btn-run" id="runDetectionBtn" onclick="runDetection()" disabled>
+              🔍 Run Clash Detection
+            </button>
+          </div>
+        </div>
+
+        <!-- ── Load Models ── -->
         <div class="sidebar-section">
           <h3>Load Models</h3>
-          
+
           <label class="file-drop" id="structureDrop">
-            <input type="file" accept=".ifc" id="structureInput" onchange="handleFileSelect(this, 'structure')">
+            <input type="file" accept=".ifc" id="structureInput">
             <div class="icon">📦</div>
             <div class="text"><strong>Structure IFC</strong><br>Drop or click to select</div>
           </label>
-          
+
           <label class="file-drop" id="mepDrop">
-            <input type="file" accept=".ifc" id="mepInput" onchange="handleFileSelect(this, 'mep')">
+            <input type="file" accept=".ifc" id="mepInput">
             <div class="icon">🔧</div>
             <div class="text"><strong>MEP IFC</strong><br>Drop or click to select</div>
           </label>
         </div>
-        
+
+        <!-- ── Structure Model ── -->
         <div class="sidebar-section" id="structureSection" style="display:none">
           <h3>Structure Model</h3>
           <div class="model-card loaded" id="structureCard">
@@ -237,7 +140,8 @@
             <div class="meta" id="structureMeta"></div>
           </div>
         </div>
-        
+
+        <!-- ── MEP Model ── -->
         <div class="sidebar-section" id="mepSection" style="display:none">
           <h3>MEP Model</h3>
           <div class="model-card loaded" id="mepCard">
@@ -245,7 +149,8 @@
             <div class="meta" id="mepMeta"></div>
           </div>
         </div>
-        
+
+        <!-- ── Combined Stats ── -->
         <div class="sidebar-section" id="statsSection" style="display:none">
           <h3>Combined Stats</h3>
           <div class="stats">
@@ -255,17 +160,45 @@
             <div class="stat-row"><span class="stat-label">Categories</span><span class="stat-value" id="totalCategories">0</span></div>
           </div>
         </div>
-        
+
+        <!-- ── Clash Results ── -->
+        <div class="sidebar-section" id="resultsSection" style="display:none">
+          <h3>Clash Results</h3>
+          <div class="stats">
+            <div class="stat-row">
+              <span class="stat-label">Total Clashes</span>
+              <span class="stat-value clash-total" id="clashCount">0</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">🔴 Hard</span>
+              <span class="stat-value hard-val" id="hardCount">0</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">🟡 Soft</span>
+              <span class="stat-value soft-val" id="softCount">0</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">🟠 Clearance</span>
+              <span class="stat-value clearance-val" id="clearanceCount">0</span>
+            </div>
+          </div>
+          <!-- Scrollable results list -->
+          <div class="results-list" id="resultsList"></div>
+        </div>
+
+        <!-- ── Building Levels ── -->
         <div class="sidebar-section" id="levelsSection" style="display:none">
           <h3>Building Levels</h3>
           <div class="levels-list" id="levelsList"></div>
         </div>
-        
+
+        <!-- ── Reset View ── -->
         <div class="sidebar-section" style="margin-top: auto;">
           <button class="btn btn-secondary" onclick="resetView()">🔄 Reset View</button>
         </div>
       </div>
-      
+
+      <!-- ── 3D Viewer ── -->
       <div id="viewer">
         <div class="empty-state" id="emptyState">
           <div class="icon">🏗️</div>
@@ -281,9 +214,11 @@
           <div><span class="label">Triangles:</span> <span class="value" id="infoTriangles">0</span></div>
         </div>
       </div>
-      
+
       <button class="toggle-theme" onclick="toggleTheme()">🌙</button>
     </main>
   </div>
 
   <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

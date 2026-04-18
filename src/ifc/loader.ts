@@ -273,7 +273,7 @@ function buildPropertyMap(api: WEBIFC.IfcAPI, modelId: number): Map<number, Reco
 function computeBBoxFromPlacedGeos(
   api: WEBIFC.IfcAPI,
   modelId: number,
-  placedGeos: WEBIFC.PlacedGeometry,
+  placedGeos: WEBIFC.Vector<WEBIFC.PlacedGeometry>,
 ): { min: [number, number, number]; max: [number, number, number] } {
   let minX = Infinity, minY = Infinity, minZ = Infinity;
   let maxX = -Infinity, maxY = -Infinity, maxZ = -Infinity;

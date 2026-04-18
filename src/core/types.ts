@@ -4,6 +4,8 @@ import * as THREE from 'three';
  * Represents a single IFC element (wall, slab, door, etc.)
  * Used by the IFC geometry layer for clash detection.
  */
+export type ModelType = 'structure' | 'mep';
+
 export interface IfcElement {
   /** Unique IFC express ID (may collide across models — prefix with modelId for global uniqueness) */
   expressID: number;
@@ -15,6 +17,8 @@ export interface IfcElement {
   name: string;
   /** Level/floor name this element belongs to */
   level?: string;
+  /** Which model this element belongs to (set during detection pipeline) */
+  modelType?: ModelType;
   /** Volume in cubic meters (extracted from IFC Quantities) */
   volume?: number;
   /** Area in square meters (extracted from IFC Quantities) */
@@ -96,4 +100,56 @@ export interface ClashDetectionConfig {
   tolerance: number;
   enableCoplanarFix: boolean;
   maxClashCount: number;
+}
+
+// ─── Selection State Machine Types (useClashSelection hook) ───────────────────
+
+export type ClashPhase =
+  | 'idle'
+  | 'loaded'
+  | 'highlighting_A'
+  | 'highlighting_B'
+  | 'ready'
+  | 'detecting'
+  | 'results';
+
+export interface ClashSelectionState {
+  phase: ClashPhase;
+  selectionA: string[];
+  selectionB: string[];
+  abortController: AbortController | null;
+  error: string | null;
+}
+
+export type ClashAction =
+  | { type: 'MODELS_LOADED' }
+  | { type: 'SELECTION_A_CHANGE'; types: string[] }
+  | { type: 'SELECTION_B_CHANGE'; types: string[] }
+  | { type: 'HIGHLIGHT_A_COMPLETE' }
+  | { type: 'HIGHLIGHT_B_COMPLETE' }
+  | { type: 'RUN_DETECTION' }
+  | { type: 'DETECTION_COMPLETE' }
+  | { type: 'DETECTION_ERROR'; error: string }
+  | { type: 'RESET' };
+
+// ─── Clash Curator App Types ───────────────────────────────────────────────────
+
+/**
+ * In-memory representation of a loaded IFC model.
+ * Used by the clash detection UI layer.
+ */
+export interface LoadedModelData {
+  mesh: THREE.Mesh;
+  expressIDLookup: Int32Array;
+  elementCount: number;
+  levels: string[];
+  categories: string[];
+  elements: IfcElement[];
+}
+
+export interface ClashSettings {
+  selectionA: string[];
+  selectionB: string[];
+  clashType: 'HARD' | 'SOFT' | 'CLEARANCE';
+  tolerance: number; // mm
 }

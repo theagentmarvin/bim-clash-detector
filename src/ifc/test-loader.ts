@@ -13,7 +13,6 @@ async function main() {
     const model = await loadIfcFromUrl(IFC_URL, 0);
 
     console.log('\n=== Model Stats ===');
-    console.log('modelId:', model.modelId);
     console.log('elements:', model.elements.length);
     console.log('levels:', model.levels);
     console.log('categories:', model.categories);
@@ -31,14 +30,10 @@ async function main() {
       );
     }
 
-    console.log('\n=== Mesh Map ===');
-    console.log('meshMap size:', model.meshMap.size);
-
-    console.log('\n=== Property Catalog (first 10 props) ===');
-    const propKeys = Object.keys(model.propertyCatalog).slice(0, 10);
-    for (const key of propKeys) {
-      const vals = model.propertyCatalog[key];
-      console.log(`  ${key}: ${vals.length} unique values → ${JSON.stringify(vals.slice(0, 3))}`);
+    console.log('\n=== Element Properties (first 3) ===');
+    for (let i = 0; i < Math.min(3, model.elements.length); i++) {
+      const el = model.elements[i];
+      console.log(`  [${i}] ${el.type} "${el.name}" | expressID=${el.expressID} | guid=${el.guid}`);
     }
 
     console.log('\n✅ IFC loader test passed');

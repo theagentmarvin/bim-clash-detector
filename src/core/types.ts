@@ -145,6 +145,8 @@ export interface LoadedModelData {
   levels: string[];
   categories: string[];
   elements: IfcElement[];
+  /** Pre-built lookup: expressID → bbox. Populated once on model load. */
+  bboxByExpressId?: Map<number, { min: [number, number, number]; max: [number, number, number] }>;
 }
 
 export interface ClashSettings {

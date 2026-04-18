@@ -48,6 +48,22 @@ export function getElementBBox(
   const cached = bboxCache.get(expressID);
   if (cached) return cached;
 
+  // Fast path: use the pre-built expressID → bbox map from IFC loading.
+  // This is O(1) vs the O(n·faces) face-scan fallback below.
+  if (modelData.bboxByExpressId) {
+    const prebuilt = modelData.bboxByExpressId.get(expressID);
+    if (prebuilt) {
+      const bbox = new THREE.Box3(
+        new THREE.Vector3(...prebuilt.min),
+        new THREE.Vector3(...prebuilt.max),
+      );
+      bboxCache.set(expressID, bbox);
+      return bbox;
+    }
+  }
+
+  // Fallback: scan merged geometry faces — expensive, only runs once per
+  // expressID that lacks pre-built bbox data.
   const bbox = new THREE.Box3();
   const geo = modelData.mesh.geometry;
   const index = geo.index!;

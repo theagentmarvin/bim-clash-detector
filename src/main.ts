@@ -21,6 +21,20 @@ import { runClashDetection, filterElementsByTypes } from './rules/engine';
 import { renderClashMatrix } from './components/ClashMatrix';
 import { renderClashResults } from './components/ClashResultsUI';
 
+// ─── BBox Lookup Helper ───────────────────────────────────────────────────────────
+
+/**
+ * Build a fast expressID → bbox lookup from pre-computed element bbox data.
+ * This avoids the O(n·faces) face-scan that getElementBBox does on first access.
+ */
+function buildBboxLookup(elements: IfcElement[]): Map<number, { min: [number, number, number]; max: [number, number, number] }> {
+  const map = new Map<number, { min: [number, number, number]; max: [number, number, number] }>();
+  for (const el of elements) {
+    if (el.bbox) map.set(el.expressID, el.bbox);
+  }
+  return map;
+}
+
 // ─── Click Selection (InstancedMesh) ─────────────────────────────────────────────
 // highlightClashElements and clearAllInstancedHighlights are imported from hooks/geometry modules.
 // Click-selection uses InstancedMesh — one draw call regardless of element count.
@@ -145,6 +159,7 @@ async function handleFileSelect(input: HTMLInputElement, type: 'structure' | 'me
       levels: result.levels,
       categories: result.categories,
       elements: result.elements,
+      bboxByExpressId: buildBboxLookup(result.elements),
     };
 
     if (type === 'structure') {
@@ -552,6 +567,11 @@ async function init(): Promise<void> {
   clashTypeSelect?.addEventListener('change', () => onClashTypeChange(clashTypeSelect));
   toleranceInput?.addEventListener('input', () => onToleranceChange(toleranceInput));
 
+  // Auto-update run button whenever selection phase changes
+  // (handles async setSelectionA/setSelectionB completion)
+  selectionManager.onPhaseChange(() => updateRunButton());
+  updateRunButton(); // initial state
+
   console.log('[clash-curator] Ready. Load Structure + MEP IFC files.');
 }
 
@@ -585,6 +605,7 @@ async function loadSampleIfcFiles(): Promise<void> {
       levels: structureResult.levels,
       categories: structureResult.categories,
       elements: structureResult.elements,
+      bboxByExpressId: buildBboxLookup(structureResult.elements),
     };
 
     console.log(`[clash-curator] Loaded Structure: ${structureResult.elements.length} elements`);
@@ -615,6 +636,7 @@ async function loadSampleIfcFiles(): Promise<void> {
       levels: mepResult.levels,
       categories: mepResult.categories,
       elements: mepResult.elements,
+      bboxByExpressId: buildBboxLookup(mepResult.elements),
     };
 
     console.log(`[clash-curator] Loaded MEP: ${mepResult.elements.length} elements`);

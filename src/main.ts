@@ -400,16 +400,16 @@ function runDetection(): void {
       document.getElementById('softCount')!.textContent = String(softCount);
       document.getElementById('clearanceCount')!.textContent = String(clearanceCount);
 
-      // Render grouped clash list items (no volume)
-      renderClashResults(clashes);
-
-      // Render clash matrix
-      renderClashMatrix();
-
-      // Expose state for matrix component reads
+      // Expose state for matrix + results components BEFORE rendering
       (window as any).__clashResults = clashes;
       (window as any).__structureElements = state.structure?.elements ?? [];
       (window as any).__mepElements = state.mep?.elements ?? [];
+
+      // Render clash matrix (reads __clashResults, __structureElements, __mepElements)
+      renderClashMatrix();
+
+      // Render grouped clash list items
+      renderClashResults(clashes);
 
       hideLoading();
       selectionManager.dispatchDetectionComplete();

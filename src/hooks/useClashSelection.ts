@@ -127,6 +127,30 @@ export function highlightClashElements(clash: Clash): void {
     dimMesh(modelDataB.mesh);
     highlightWithInstancing(modelDataB, [elemB.expressID], 0xf97316);
   }
+
+  // ── Zoom to clash centroid ───────────────────────────────────────────────
+  const [cx, cy, cz] = clash.centroid;
+  const cam = state.camera;
+  const controls = state.controls;
+
+  // Animate camera toward the clash: position offset from centroid
+  const offset = new THREE.Vector3(cx, cy, cz);
+  const dir = offset.clone().normalize();
+  const distance = Math.max(...[
+    Math.abs(clash.elementA.bbox ? clash.elementA.bbox.max[0] - clash.elementA.bbox.min[0] : 2),
+    Math.abs(clash.elementA.bbox ? clash.elementA.bbox.max[1] - clash.elementA.bbox.min[1] : 2),
+    Math.abs(clash.elementA.bbox ? clash.elementA.bbox.max[2] - clash.elementA.bbox.min[2] : 2),
+    Math.abs(clash.elementB.bbox ? clash.elementB.bbox.max[0] - clash.elementB.bbox.min[0] : 2),
+    Math.abs(clash.elementB.bbox ? clash.elementB.bbox.max[1] - clash.elementB.bbox.min[1] : 2),
+    Math.abs(clash.elementB.bbox ? clash.elementB.bbox.max[2] - clash.elementB.bbox.min[2] : 2),
+  ]) * 2.5;
+
+  const target = new THREE.Vector3(cx, cy, cz);
+  const camPos = target.clone().add(dir.multiplyScalar(distance));
+
+  cam.position.copy(camPos);
+  controls.target.copy(target);
+  controls.update();
 }
 
 function dimMesh(mesh: THREE.Mesh): void {
